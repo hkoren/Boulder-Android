@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Boulder Colorado</string>
+    <string name="app_name">Boulder</string>
+    <string name="description">This app isn\'t very good yet... You can join us to help make it better.\nWhether You\'re a Developer or an Enthusiast, join the Boulder Android Meetup Group!</string>
+</resources>

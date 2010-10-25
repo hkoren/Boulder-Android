@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
+    android:layout_centerVertical="true" android:layout_gravity="bottom">
+    
+    <ImageView
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:id="@+id/background_image"
+    	android:scaleType="centerCrop"
+    	android:src="@drawable/boulderapp"
+    	/>
+    	<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Boulder Colorado"
+    android:textStyle="bold"
+    android:textSize="20pt"
+    android:textColor="#000000"
+	android:layout_centerVertical="true"
+    android:id="@+id/boco"
+    android:layout_alignTop="@id/background_image"
+    
+    />
+    <!--  <View android:id="@+id/spacer"
+    android:layout_width="fill_parent"	
+    	android:layout_above="@id/meetup_group" 
+    android:layout_below="@id/boco" android:layout_height="50sp"/> -->
+    <RelativeLayout
+    android:layout_width="fill_parent" 
+    android:layout_alignBottom="@id/background_image" android:layout_height="wrap_content">	
+        	<TextView 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="@string/description"
+    android:textSize="7pt"
+    android:textColor="#ffffff"
+    android:background="#44000000"
+    android:id="@+id/description"
+    android:paddingLeft="5sp"
+    android:paddingRight="20sp"
+    android:paddingTop="10sp"
+    android:paddingBottom="10sp"
+    android:layout_above="@id/meetup_group" 
+    />
+    	
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:paddingLeft="15sp"
+    android:paddingRight="15sp"
+    android:paddingTop="10sp"
+    android:layout_below="@id/description"
+    android:id="@+id/button_bar" android:hapticFeedbackEnabled="true" 
+    android:gravity="bottom|center_vertical" 
+    android:layout_weight="1">    
+    <Button
+    android:id="@+id/meetup_group"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="BA Meetup Group"
+    />
+    <Button
+    android:id="@+id/dot_com"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="BoulderAndroid.com"
+    />
+    <Button
+    android:id="@+id/follow_twitter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" android:text="\@BoulderAndroid on Twitter"/>
+    </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
