@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 
 public class Boulder extends Activity {
 	
@@ -33,6 +32,7 @@ public class Boulder extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        RestClient client = new RestClient(restURL);
         
         initBackground();
         
