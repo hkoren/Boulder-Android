@@ -8,9 +8,12 @@ import android.view.Menu;
 
 public class ReaderActivity extends Activity {
 
+	FeedUpdaterTask updateTask = new FeedUpdaterTask();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		updateTask.execute();
+		
 	}
 
 	@Override
