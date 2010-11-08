@@ -31,8 +31,6 @@ public class Boulder extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-        RestClient client = new RestClient(restURL);
         
         initBackground();
         
@@ -43,14 +41,26 @@ public class Boulder extends Activity {
         URLClickButton(R.id.meetup_group,"http://www.meetup.com/Boulder-Android/");
         URLClickButton(R.id.follow_twitter,"http://twitter.com/BoulderAndroid");
         URLClickButton(R.id.dot_com,"http://BoulderAndroid.com");
+        
+        // Reader Button
+        initReaderButton();
 
     }
     
+    public void initReaderButton() {
+    	Button button = (Button)findViewById(R.id.rss_reader);
+        button.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				Intent goRead = new Intent(view.getContext(), ReaderActivity.class);
+				startActivity(goRead);
+			}
+        	
+        });
+    }
     public void initBackground() {
 //    	ImageView image = (ImageView)findViewById(R.id.background_image);
 //    	image.setBackgroundDrawable()
     	
-    
     }
 
 	public void onClick(View arg0) {

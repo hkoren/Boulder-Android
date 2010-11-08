@@ -10,7 +10,13 @@
             </intent-filter>
 </activity>
 
-    </application>
+    <activity android:name=".ReaderActivity"></activity>
+<activity android:name=".FeedCommentsActivity"></activity>
+<activity android:name=".ArticleReadActivity"></activity>
+<activity android:name=".FeedCommentsActivity"></activity>
+<activity android:name=".FeedInfoActivity"></activity>
+<activity android:name=".SubmitCommentActivity"></activity>
+</application>
     <uses-sdk android:minSdkVersion="8"/>
 
 </manifest> 

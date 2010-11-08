@@ -1,5 +1,7 @@
 package com.kmzme.boulder;
 
-public class SubmitCommentActivity {
+import android.app.Activity;
+
+public class SubmitCommentActivity extends Activity{
 
 }

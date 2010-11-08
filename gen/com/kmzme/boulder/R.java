@@ -17,14 +17,16 @@ public final class R {
     public static final class id {
         public static final int background_image=0x7f050000;
         public static final int boco=0x7f050001;
-        public static final int button_bar=0x7f050006;
+        public static final int button_bar=0x7f050007;
         public static final int description=0x7f050002;
-        public static final int dot_com=0x7f050005;
-        public static final int follow_twitter=0x7f050004;
-        public static final int meetup_group=0x7f050003;
+        public static final int dot_com=0x7f050006;
+        public static final int follow_twitter=0x7f050005;
+        public static final int meetup_group=0x7f050004;
+        public static final int rss_reader=0x7f050003;
     }
     public static final class layout {
         public static final int main=0x7f030000;
+        public static final int portal=0x7f030001;
     }
     public static final class string {
         public static final int app_name=0x7f040001;

@@ -56,6 +56,12 @@
     >
     
     <Button
+    android:id="@+id/rss_reader"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="RSS Reader"
+    />
+    <Button
     android:id="@+id/meetup_group"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
