@@ -8,8 +8,9 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-</activity>
+	</activity>
 
+    <activity android:name=".RssMessageListActivity"></activity>
     <activity android:name=".ReaderActivity"></activity>
 <activity android:name=".FeedCommentsActivity"></activity>
 <activity android:name=".ArticleReadActivity"></activity>
@@ -18,5 +19,7 @@
 <activity android:name=".SubmitCommentActivity"></activity>
 </application>
     <uses-sdk android:minSdkVersion="8"/>
+
+	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
 </manifest> 
