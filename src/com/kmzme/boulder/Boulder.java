@@ -51,7 +51,8 @@ public class Boulder extends Activity {
     	Button button = (Button)findViewById(R.id.rss_reader);
         button.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				Intent goRead = new Intent(view.getContext(), ReaderActivity.class);
+				Intent goRead = new Intent(view.getContext(), RssMessageListActivity.class);
+//				Intent goRead = new Intent(view.getContext(), ReaderActivity.class);
 				startActivity(goRead);
 			}
         	
