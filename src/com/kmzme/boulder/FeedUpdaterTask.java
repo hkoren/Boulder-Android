@@ -47,50 +47,51 @@ public class FeedUpdaterTask extends AsyncTask {
 				e1.printStackTrace();
 			}
 			String jsonContent = client.getResponse();
-		    JSONArray jArray = new JSONArray(jsonContent);
-		    
-		    // loop thru each suggested RSS Feed  
-		    for (int j = 0; j < jArray.length() ; j++) {
-		    	
-		    	// parse JSON contents to obtain RSS Article URLs  
-		    	JSONObject jObject  = jArray.getJSONObject(j) ; 
-		    	String rssURL = jObject.getString("RSS_URL").toString()  ;
-		    	// query each RSS URL to get RSS Article 
-		    	
-		    	Log.i(Boulder.TAG,"Rss URL: "+rssURL);
-		    	
-		    	
-		    	RssBaseFeedParser parser = new RssBaseFeedParser(rssURL);
-		    	try {
-					messages = parser.parse();
-				} catch (InvalidFeedException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					continue;
-				}
-		    	for (RssMessage msg : messages){
-		    		//String guid = "1" ;  // set guid to 1 for testing purposes 
-		    		// check if article already exists
-		    		Log.i(Boulder.TAG, "Getting message " + msg.getLink());
-		    		Cursor myArticle = aDbHelper.fetchArticle(msg.getGuid());
-		    		if (myArticle != null  && false) {
-		    			// if so update record   	
-		    			Log.i(Boulder.TAG, "Already Have Message, title: " + myArticle.getString(myArticle.getColumnIndex("title")));
-		    			aDbHelper.updateNote(msg.getGuid(), msg.getTitle(), 
-		    					msg.getTitle(), msg.getDescription(), int_feed_id, msg.getLink()) ;
-		    			myArticle.close();
-		    		} else {
-		    			myArticle.close();
-		    			// write results  	
-		    			Log.i(Boulder.TAG, "Adding New Message");
-		    			aDbHelper.createNote(msg.getGuid(), msg.getTitle(), 
-		    					msg.getTitle(), msg.getDescription(), int_feed_id, msg.getLink()) ;
-		    		}
-		    	}
-		    }
-
-		    this.readerActivity.updateArticlesList();
-		    
+			Log.i(Boulder.TAG,"JSON content: " + jsonContent);
+			if (jsonContent != null) {
+			    JSONArray jArray = new JSONArray(jsonContent);
+			    
+			    // loop thru each suggested RSS Feed  
+			    for (int j = 0; j < jArray.length() ; j++) {
+			    	
+			    	// parse JSON contents to obtain RSS Article URLs  
+			    	JSONObject jObject  = jArray.getJSONObject(j) ; 
+			    	String rssURL = jObject.getString("RSS_URL").toString()  ;
+			    	// query each RSS URL to get RSS Article 
+			    	
+			    	Log.i(Boulder.TAG,"Rss URL: "+rssURL);
+			    	
+			    	
+			    	RssBaseFeedParser parser = new RssBaseFeedParser(rssURL);
+			    	try {
+						messages = parser.parse();
+					} catch (InvalidFeedException e) {
+						// TODO Auto-generated catch block
+						//e.printStackTrace();
+						continue;
+					}
+			    	for (RssMessage msg : messages){
+			    		//String guid = "1" ;  // set guid to 1 for testing purposes 
+			    		// check if article already exists
+			    		Log.i(Boulder.TAG, "Getting message " + msg.getLink());
+			    		Cursor myArticle = aDbHelper.fetchArticle(msg.getGuid());
+			    		if (myArticle.getCount()==1  ) {
+			    			// if so update record   	
+			    			Log.i(Boulder.TAG, "Already Have Message, title: " + myArticle.getString(myArticle.getColumnIndex("title")));
+//			    			aDbHelper.updateNote(msg.getGuid(), msg.getTitle(), 
+//			    					msg.getTitle(), msg.getDescription(), int_feed_id, msg.getLink()) ;
+			    			myArticle.close();
+			    		} else {
+			    			myArticle.close();
+			    			// write results  	
+			    			Log.i(Boulder.TAG, "Adding New Message");
+			    			aDbHelper.createNote(msg.getGuid(), msg.getTitle(), 
+			    					msg.getTitle(), msg.getDescription(), int_feed_id, msg.getLink()) ;
+			    		}
+			    	}
+			    }
+			    this.readerActivity.updateArticlesList(aDbHelper);
+			}	    
 		} catch (JSONException e) {
 				Log.e("FeedUpdaterTask", "Error parsing JSON data "+e.toString());
 				e.printStackTrace();

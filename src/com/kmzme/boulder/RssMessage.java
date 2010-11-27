@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.database.Cursor;
+
 public class RssMessage implements Comparable<RssMessage>{
 	static SimpleDateFormat FORMATTER = 
 		new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
@@ -14,6 +16,18 @@ public class RssMessage implements Comparable<RssMessage>{
 	private String description;
 	private Date date;
 	private String guid;
+
+	public RssMessage(Cursor articlesCursor) {
+		
+		setTitle(articlesCursor.getString(articlesCursor.getColumnIndex(ArticlesDbAdapter.KEY_TITLE)));
+		setGuid(articlesCursor.getString(articlesCursor.getColumnIndex(ArticlesDbAdapter.KEY_GUID)));
+		setLink(articlesCursor.getString(articlesCursor.getColumnIndex(ArticlesDbAdapter.KEY_LINK)));
+		//setDate(articlesCursor.getString(articlesCursor.getColumnIndex(ArticlesDbAdapter.KEY_)));
+	}
+
+	public RssMessage() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getTitle() {
 		return title;
@@ -55,14 +69,14 @@ public class RssMessage implements Comparable<RssMessage>{
 		}
 	}
 	
-	public RssMessage copy(){
-		RssMessage copy = new RssMessage();
-		copy.title = title;
-		copy.link = link;
-		copy.description = description;
-		copy.date = date;
-		return copy;
-	}
+//	public RssMessage copy(){
+//		RssMessage copy = new RssMessage();
+//		copy.title = title;
+//		copy.link = link;
+//		copy.description = description;
+//		copy.date = date;
+//		return copy;
+//	}
 	
 	@Override
 	public String toString() {

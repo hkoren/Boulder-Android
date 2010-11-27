@@ -56,7 +56,7 @@ public class RssBaseFeedParser {
 		Element item = itemlist.getChild(ITEM);
 		item.setEndElementListener(new EndElementListener(){
 			public void end() {
-				messages.add(currentMessage.copy());
+				messages.add(currentMessage);
 			}
 		});
 		item.getChild(TITLE).setEndTextElementListener(new EndTextElementListener(){

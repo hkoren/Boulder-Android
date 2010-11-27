@@ -16,10 +16,13 @@
 
 package com.kmzme.boulder;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -122,14 +125,17 @@ public class ArticlesDbAdapter {
      */
     public long createNote(String guid, String title, String content, String description, Integer feed_id, String link) {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_GUID, guid);
-        initialValues.put(KEY_TITLE, title);
-        initialValues.put(KEY_CONTENT, content);
-        initialValues.put(KEY_DESCRIPTION, description);
+        initialValues.put(KEY_GUID, "'"+guid+"'");
+        initialValues.put(KEY_TITLE, "'"+title+"'");
+        initialValues.put(KEY_CONTENT, "'"+content+"'");
+        initialValues.put(KEY_DESCRIPTION, "'"+description+"'");
         initialValues.put(KEY_FEED_ID, feed_id);
-        initialValues.put(KEY_LINK, link);
-
-        return mDb.insert(DATABASE_TABLE, null, initialValues);
+        initialValues.put(KEY_LINK, "'"+link+"'");
+        try {
+        	return mDb.insert(DATABASE_TABLE, null, initialValues);
+        }catch(SQLiteConstraintException e) {
+        	return 0;
+        }
     }
 
     /**
@@ -140,7 +146,7 @@ public class ArticlesDbAdapter {
      */
     public boolean deleteNote(long rowId) {
 
-        return mDb.delete(DATABASE_TABLE, KEY_GUID + "=" + rowId, null) > 0;
+        return mDb.delete(DATABASE_TABLE, KEY_GUID + "='" + rowId +"'", null) > 0;
     }
 
     /**
@@ -148,10 +154,21 @@ public class ArticlesDbAdapter {
      * 
      * @return Cursor over all notes
      */
-    public Cursor fetchAllArticles() {
+    public ArrayList<RssMessage> fetchAllArticles() {
 
-        return mDb.query(DATABASE_TABLE, new String[] {KEY_GUID, KEY_TITLE,
+        Cursor articlesCursor = mDb.query(DATABASE_TABLE, new String[] {KEY_GUID, KEY_TITLE,
                 KEY_CONTENT, KEY_DESCRIPTION, KEY_FEED_ID, KEY_LINK}, null, null, null, null, null);
+        articlesCursor.moveToFirst();
+        
+        ArrayList<RssMessage> output = new ArrayList<RssMessage>();
+        while (!articlesCursor.isAfterLast()) {
+        	RssMessage rssMessage = new RssMessage(articlesCursor);
+        	output.add(rssMessage);
+        	articlesCursor.moveToNext();
+        }
+        return output;
+        
+        
     }
 
     /**
@@ -166,7 +183,7 @@ public class ArticlesDbAdapter {
         Cursor mCursor =
 
             mDb.query(true, DATABASE_TABLE, new String[] {KEY_GUID,
-                    KEY_TITLE, KEY_CONTENT, KEY_DESCRIPTION, KEY_FEED_ID}, KEY_GUID + "=" + guid, null,
+                    KEY_TITLE, KEY_CONTENT, KEY_DESCRIPTION, KEY_FEED_ID}, KEY_GUID + "='" + guid+"'", null,
                     null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -192,7 +209,7 @@ public class ArticlesDbAdapter {
         args.put(KEY_DESCRIPTION, description);
         args.put(KEY_FEED_ID, feed_id);
         
-        return mDb.update(DATABASE_TABLE, args, KEY_GUID + "=" + guid, null) > 0;
+        return mDb.update(DATABASE_TABLE, args, KEY_GUID + "='" + guid + "'", null) > 0;
     }
 }
 
