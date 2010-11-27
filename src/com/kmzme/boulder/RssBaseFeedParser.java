@@ -7,6 +7,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.xml.sax.SAXException;
+
 import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
@@ -26,6 +28,7 @@ public class RssBaseFeedParser {
 	static final String DESCRIPTION = "description";
 	static final String LINK = "link";
 	static final String TITLE = "title";
+	static final String GUID = "guid";
 	
 	private final URL feedUrl;
 
@@ -45,7 +48,7 @@ public class RssBaseFeedParser {
 		}
 	}
 	
-	public List<RssMessage> parse() {
+	public List<RssMessage> parse() throws InvalidFeedException {
 		final RssMessage currentMessage = new RssMessage();
 		RootElement root = new RootElement(RSS);
 		final List<RssMessage> messages = new ArrayList<RssMessage>();
@@ -76,10 +79,20 @@ public class RssBaseFeedParser {
 				currentMessage.setDate(body);
 			}
 		});
+		item.getChild(GUID).setEndTextElementListener(new EndTextElementListener(){
+			public void end(String body) {
+				currentMessage.setGuid(body);
+			}
+		});
+		if (currentMessage.getGuid() == "") {
+			currentMessage.setGuid(currentMessage.getLink());
+		}
 		try {
 			Xml.parse(this.getInputStream(), Xml.Encoding.UTF_8, root.getContentHandler());
+		} catch (SAXException e) {
+			throw new InvalidFeedException(e,this.feedUrl);
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new InvalidFeedException(e,this.feedUrl);
 		}
 		return messages;
 	}

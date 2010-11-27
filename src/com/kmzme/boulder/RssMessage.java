@@ -10,9 +10,10 @@ public class RssMessage implements Comparable<RssMessage>{
 	static SimpleDateFormat FORMATTER = 
 		new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
 	private String title;
-	private URL link;
+	private String link;
 	private String description;
 	private Date date;
+	private String guid;
 
 	public String getTitle() {
 		return title;
@@ -22,16 +23,12 @@ public class RssMessage implements Comparable<RssMessage>{
 		this.title = title.trim();
 	}
 	// getters and setters omitted for brevity 
-	public URL getLink() {
+	public String getLink() {
 		return link;
 	}
 	
 	public void setLink(String link) {
-		try {
-			this.link = new URL(link);
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
+		this.link = link.trim();		
 	}
 
 	public String getDescription() {
@@ -132,5 +129,15 @@ public class RssMessage implements Comparable<RssMessage>{
 		if (another == null) return 1;
 		// sort descending, most recent first
 		return another.date.compareTo(date);
+	}
+
+	public String getGuid() {
+		// TODO Auto-generated method stub
+		return guid;
+	}
+
+	public void setGuid(String guid) {
+		this.guid = guid;
+		
 	}
 }

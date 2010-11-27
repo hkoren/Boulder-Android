@@ -21,6 +21,8 @@ public class Boulder extends Activity {
 			startActivity(i);
 		}		
 	}
+
+	public static final String TAG = "Boulder";
 	private void URLClickButton(int id, String url) {
         Button button = (Button)findViewById(id);
         button.setOnClickListener(new URLClickListener(url));		
@@ -35,6 +37,7 @@ public class Boulder extends Activity {
         initBackground();
         
         initButtons();
+        
     }
     
     public void initButtons() {
@@ -51,8 +54,8 @@ public class Boulder extends Activity {
     	Button button = (Button)findViewById(R.id.rss_reader);
         button.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				Intent goRead = new Intent(view.getContext(), RssMessageListActivity.class);
-//				Intent goRead = new Intent(view.getContext(), ReaderActivity.class);
+//				Intent goRead = new Intent(view.getContext(), RssMessageListActivity.class);
+				Intent goRead = new Intent(view.getContext(), ReaderActivity.class);
 				startActivity(goRead);
 			}
         	
